@@ -1,0 +1,43 @@
+<h1>いいねサンプル</h1>
+<% if user_signed_in? %>
+  <%= link_to "ログアウト", destroy_user_session_path, :method => :delete %>
+  <%= link_to "マイページへ", user_path(current_user.id) %>
+  <h2>投稿する</h2>
+  
+  <%= form_with model:@post do |f| %>
+    <%= f.label :title%>
+    <%= f.text_field :title %>
+    <br>
+    <%= f.label :body%>
+    <%= f.text_field :body %>
+    <br>
+    <%= f.submit %>
+  <% end %>
+
+  <hr>
+  <h2>投稿一覧</h2>
+  <% @posts.each do |post| %>
+    <a href="/users/<%= post.user.id %>"><%= post.user.email %></a>
+    <a href="/posts/<%= post.id %>"><%= post.title %></a>
+    <br>
+    <a href="/posts/<%= post.id %>"><%= post.body %></a>
+    <br>
+    (<%= post.liked_users.count %>)
+    <%# 以下を追記 %>
+    <% if current_user.already_liked?(post) %>
+    <%= button_to 'いいねを取り消す', post_like_path(post), method: :delete %>
+    <% else %>
+    <%= button_to 'いいね', post_likes_path(post) %>
+    <% end %>
+    <% end %>
+  
+    
+    <br>
+    <br>
+  <% end %>
+  <br>
+  <% end %>
+
+  <%= link_to "ユーザー登録", new_user_registration_path %>
+  <%= link_to "ログイン", new_user_session_path %>
+
