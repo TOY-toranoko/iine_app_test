@@ -11,6 +11,7 @@
     <%= f.label :body%>
     <%= f.text_field :body %>
     <br>
+    <%# <button>Submit</button> %>
     <%= f.submit %>
   <% end %>
 
@@ -25,9 +26,9 @@
     (<%= post.liked_users.count %>)
     <%# 以下を追記 %>
     <% if current_user.already_liked?(post) %>
-      <td><%= link_to 'いいねを外す', destroy_like_path(post), method: :DELETE %></td>
+      <td><%= link_to 'いいねを外す', like_path(post.likes.find_by(user_id: current_user.id)), method: :DELETE %></td>
     <% else %>
-      <td><%= link_to 'いいね', create_like_path(post), method: :POST %></td>
+      <td><%= link_to 'いいね', post_likes_path(post), method: :POST %></td>
     <% end %>
     <%= @path %>
     <br>
