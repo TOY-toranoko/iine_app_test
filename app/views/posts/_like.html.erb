@@ -1,0 +1,5 @@
+<% if current_user.already_liked?(post) %>
+  <td><%= link_to "いいねを外す", post_like_path(post, post.likes.find_by(user_id: current_user.id)), method: :DELETE, remote: true %>(<%= post.liked_users.count %>)</td>
+<% else %>
+  <td><%= link_to "いいね", post_likes_path(post), method: :POST, remote: true %>(<%= post.liked_users.count %>)</td>
+<% end %>

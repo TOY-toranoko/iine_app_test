@@ -4,14 +4,14 @@
   <%= link_to "マイページへ", user_path(current_user.id) %>
   <h2>投稿する</h2>
   
-  <%= form_with model:@post do |f| %>
-    <%= f.label :title%>
+  <%= form_with model: @post do |f| %>
+    <%= f.label :title %>
     <%= f.text_field :title %>
     <br>
-    <%= f.label :body%>
+    <%= f.label :body %>
     <%= f.text_field :body %>
     <br>
-    <%# <button>Submit</button> %>
+    <% # <button>Submit</button> %>
     <%= f.submit %>
   <% end %>
 
@@ -23,19 +23,20 @@
     <br>
     <a href="/posts/<%= post.id %>"><%= post.body %></a>
     <br>
-    (<%= post.liked_users.count %>)
-    <%# 以下を追記 %>
-    <% if current_user.already_liked?(post) %>
-      <td><%= link_to 'いいねを外す', like_path(post.likes.find_by(user_id: current_user.id)), method: :DELETE %></td>
-    <% else %>
-      <td><%= link_to 'いいね', post_likes_path(post), method: :POST %></td>
-    <% end %>
-    <%= @path %>
+
+    <% # likes button %>
+    <div id="likes_buttons_<%= post.id %>">
+        <%= render partial: "posts/like", locals: { post: post} %>
+    </div>
     <br>
     <br>
   <% end %>
 <% end %>
+   <p>テスト</p>
+
   <%= link_to "ユーザー登録", new_user_registration_path %>
   <%= link_to "ログイン", new_user_session_path %>
+
+ 
 
 
